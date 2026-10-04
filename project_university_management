@@ -1,0 +1,283 @@
+-- ============================================
+-- UNIVERSITY ACADEMIC MANAGEMENT SYSTEM
+-- MySQL Database
+-- ============================================
+
+CREATE DATABASE IF NOT EXISTS UniversityDB;
+
+USE UniversityDB;
+
+-- ============================================
+-- 1. DEPARTMENT TABLE
+-- ============================================
+
+CREATE TABLE Department (
+    Department_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Department_Name VARCHAR(100) NOT NULL,
+    HOD_Name VARCHAR(100)
+);
+
+-- ============================================
+-- 2. STUDENT TABLE
+-- ============================================
+
+CREATE TABLE Student (
+    Student_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_Name VARCHAR(100) NOT NULL,
+    Gender VARCHAR(10),
+    Date_of_Birth DATE,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    Department_ID INT,
+    Admission_Year YEAR,
+
+    FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID)
+);
+
+-- ============================================
+-- 3. FACULTY TABLE
+-- ============================================
+
+CREATE TABLE Faculty (
+    Faculty_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Faculty_Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Phone VARCHAR(15),
+    Department_ID INT,
+
+    FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID)
+);
+
+-- ============================================
+-- 4. COURSE TABLE
+-- ============================================
+
+CREATE TABLE Course (
+    Course_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Course_Name VARCHAR(100) NOT NULL,
+    Credits INT,
+    Department_ID INT,
+
+    FOREIGN KEY (Department_ID)
+        REFERENCES Department(Department_ID)
+);
+
+-- ============================================
+-- 5. ENROLLMENT TABLE
+-- ============================================
+
+CREATE TABLE Enrollment (
+    Enrollment_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_ID INT,
+    Course_ID INT,
+    Enrollment_Date DATE,
+
+    FOREIGN KEY (Student_ID)
+        REFERENCES Student(Student_ID),
+
+    FOREIGN KEY (Course_ID)
+        REFERENCES Course(Course_ID)
+);
+
+-- ============================================
+-- 6. FACULTY COURSE TABLE
+-- ============================================
+
+CREATE TABLE Faculty_Course (
+    Faculty_ID INT,
+    Course_ID INT,
+
+    PRIMARY KEY (Faculty_ID, Course_ID),
+
+    FOREIGN KEY (Faculty_ID)
+        REFERENCES Faculty(Faculty_ID),
+
+    FOREIGN KEY (Course_ID)
+        REFERENCES Course(Course_ID)
+);
+
+-- ============================================
+-- 7. EXAM TABLE
+-- ============================================
+
+CREATE TABLE Exam (
+    Exam_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Course_ID INT,
+    Exam_Name VARCHAR(100),
+    Exam_Date DATE,
+
+    FOREIGN KEY (Course_ID)
+        REFERENCES Course(Course_ID)
+);
+
+-- ============================================
+-- 8. RESULT TABLE
+-- ============================================
+
+CREATE TABLE Result (
+    Result_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_ID INT,
+    Exam_ID INT,
+    Marks INT,
+    Grade VARCHAR(5),
+
+    FOREIGN KEY (Student_ID)
+        REFERENCES Student(Student_ID),
+
+    FOREIGN KEY (Exam_ID)
+        REFERENCES Exam(Exam_ID)
+);
+
+-- ============================================
+-- INSERT DEPARTMENT DATA
+-- ============================================
+
+INSERT INTO Department (Dept_ID, Dept_Name, HOD_Name)
+VALUES
+(1, 'Computer Science and Engineering', 'Dr. Ravi'),
+(2, 'Electronics and Communication Engineering', 'Dr. Lakshmi'),
+(3, 'Mechanical Engineering', 'Dr. Kumar');
+DESCRIBE Department
+-- ============================================
+-- INSERT STUDENT DATA
+-- ============================================
+
+INSERT INTO Student
+(Student_ID, Student_Name, Gender, DOB, Email, Dept_ID)
+VALUES
+(1, 'Anu', 'Female', '2005-05-10', 'anu@gmail.com', 1),
+(2, 'Ravi', 'Male', '2004-08-15', 'ravi@gmail.com', 2),
+(3, 'Sita', 'Female', '2005-02-20', 'sita@gmail.com', 3);
+DESCRIBE Student
+-- ============================================
+-- INSERT FACULTY DATA
+
+-- ============================================
+
+INSERT INTO Faculty
+(Faculty_Name, Email, Phone, Department_ID)
+VALUES
+('Dr. Ravi', 'ravi@university.com', '9000000001', 1),
+('Dr. Lakshmi', 'lakshmi@university.com', '9000000002', 2),
+('Dr. Naveen', 'naveen@university.com', '9000000003', 3),
+('Dr. Arjun', 'arjun@university.com', '9000000004', 4);
+
+-- ============================================
+-- INSERT COURSE DATA
+-- ============================================
+
+INSERT INTO Course
+(Course_Name, Credits, Department_ID)
+VALUES
+('Database Management Systems', 4, 1),
+('Object Oriented Programming', 4, 1),
+('Computer Networks', 3, 1),
+('Digital Electronics', 4, 2),
+('Electrical Circuits', 3, 3);
+
+-- ============================================
+-- INSERT ENROLLMENT DATA
+-- ============================================
+
+INSERT INTO Enrollment
+(Student_ID, Course_ID, Enrollment_Date)
+VALUES
+(1, 1, '2025-07-10'),
+(1, 2, '2025-07-10'),
+(2, 1, '2025-07-10'),
+(2, 3, '2025-07-10'),
+(3, 4, '2025-07-10'),
+(4, 5, '2025-07-10');
+
+-- ============================================
+-- INSERT FACULTY COURSE DATA
+-- ============================================
+
+INSERT INTO Faculty_Course
+(Faculty_ID, Course_ID)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 4),
+(3, 5);
+
+-- ============================================
+-- INSERT EXAM DATA
+-- ============================================
+
+INSERT INTO Exam
+(Course_ID, Exam_Name, Exam_Date)
+VALUES
+(1, 'Mid Term Examination', '2025-09-15'),
+(2, 'Mid Term Examination', '2025-09-17'),
+(3, 'Mid Term Examination', '2025-09-19'),
+(4, 'Mid Term Examination', '2025-09-20'),
+(5, 'Mid Term Examination', '2025-09-22');
+
+-- ============================================
+-- INSERT RESULT DATA
+-- ============================================
+
+INSERT INTO Result
+(Student_ID, Exam_ID, Marks, Grade)
+VALUES
+(1, 1, 85, 'A'),
+(1, 2, 90, 'A+'),
+(2, 1, 78, 'B+'),
+(2, 3, 82, 'A'),
+(3, 4, 88, 'A'),
+(4, 5, 75, 'B+');
+
+-- ============================================
+-- DISPLAY TABLES
+-- ============================================
+
+SHOW TABLES;
+
+-- ============================================
+-- SAMPLE QUERIES
+-- ============================================
+
+-- Display all students
+SELECT * FROM Student;
+
+-- Display all faculty
+SELECT * FROM Faculty;
+
+-- Display all courses
+SELECT * FROM Course;
+
+-- Display student with department
+SELECT
+    Student.Student_ID,
+    Student.Student_Name,
+    Department.Department_Name
+FROM Student
+JOIN Department
+ON Student.Department_ID = Department.Department_ID;
+
+-- Display student results
+SELECT
+    Student.Student_Name,
+    Exam.Exam_Name,
+    Result.Marks,
+    Result.Grade
+FROM Result
+JOIN Student
+ON Result.Student_ID = Student.Student_ID
+JOIN Exam
+ON Result.Exam_ID = Exam.Exam_ID;
+
+-- Display courses with departments
+SELECT
+    Course.Course_Name,
+    Course.Credits,
+    Department.Department_Name
+FROM Course
+JOIN Department
+ON Course.Department_ID = Department.Department_ID;
+
+
