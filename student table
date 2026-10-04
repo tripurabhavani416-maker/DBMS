@@ -1,0 +1,61 @@
+create database aa;
+use aa;
+CREATE TABLE Stu (
+    Student_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    Department VARCHAR(30),
+    Adress VARCHAR(100));
+    CREATE TABLE S1 (
+    Student_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    Department VARCHAR(30),
+    Adress VARCHAR(100));
+    INSERT INTO S1 (Student_ID, Name, Age, Department,Adress)
+VALUES (103, 'Ravi', 5, 'CSE','vizag');
+select * from S1;
+select	* from Stu;
+UPDATE S1 SET Name = 'Raju' WHERE Student_ID=102;
+INSERT INTO S1 (Student_ID, Name, Age, Department,Adress)
+VALUES (112, 'Ravi', 5, 'AIML','vizag');
+(106, 'Ravi', 20, 'CSE','vizag'),
+(107, 'Ravi', 30, 'AIML','vizag'),
+(108, 'Ravi', 45, 'IT','vizag'),
+(109, 'Ravi', 55, 'AIML','vizag'),
+(110, 'Ravi', 45, 'IT','vizag');
+select * from S1;
+ALTER TABLE S1 ADD Email VARCHAR(100);
+ALTER TABLE S1 ADD DOB date;
+ALTER TABLE S1 modify DOB datetime;
+
+select * from S1;
+ALTER TABLE S1 DROP COLUMN DOB;
+ALTER TABLE S1 RENAME COLUMN Age TO Stuage;
+DROP TABLE Stu;
+RENAME TABLE S1 TO Stu;
+ALTER TABLE S1 RENAME COLUMN Age TO Stuage;
+TRUNCATE TABLE Stu;
+select * from S1;
+select * from Stu;
+
+UPDATE S1 SET Adress='kakinada' WHERE Student_ID=102;
+DELETE FROM S1 WHERE Student_ID=105;
+SELECT Name, Age FROM S1 WHERE  Department='AIML';
+SELECT S.name,S.Department, e.Age,e.Adress
+FROM S1 AS S, Stu AS E
+WHERE S.Student_ID != E.Student_ID;
+select * from S1;
+select *from Stu;
+select Age from S1;
+SELECT COUNT(*) AS total_students FROM S1;
+SELECT 
+AVG(Age) AS average_Age,
+  MAX(Age) AS highest_Age,
+  MIN(Age) AS lowest_Age,
+  SUM(Age) AS total_Age
+FROM S1;
+SELECT Department , Min(Age) AS Min_Age 
+FROM S1
+GROUP BY Department
+HAVING Min(Age) > 18;
