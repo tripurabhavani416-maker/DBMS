@@ -1,0 +1,35 @@
+use aa;
+CREATE TABLE S2 (
+    Student_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age INT,
+    Department VARCHAR(30),
+    Adress VARCHAR(100));
+    INSERT INTO S2 (Student_ID, Name, Age, Department,Adress)
+VALUES
+(103, 'Arun', 19, 'CSE','gjfvghf'),
+(104, 'Sneha', 20, 'IT','hfdfh');
+INSERT INTO S2
+VALUES
+(105, 'Arun', 19, 'CSE','gjfvghf');
+select * from S2;
+ALTER TABLE S2 ADD Email VARCHAR(100);
+ALTER TABLE S2 ADD DOB date;
+INSERT INTO S3
+VALUES
+(110, 'Arun', 19, 'CSE','gjfvghf','arun@gmail.com','2000-03-25');
+
+ALTER TABLE S2 MODIFY Age SMALLINT;
+ALTER TABLE S2 DROP COLUMN Email;
+ALTER TABLE S2 RENAME COLUMN Age TO Stuage;
+DROP TABLE S3;
+RENAME TABLE S2 TO S3;
+TRUNCATE TABLE S3;
+select *from S2;
+select Student_ID ,Name from S3;
+UPDATE S2 SET  Department='AIML' WHERE Student_ID = 103; 
+DELETE FROM S2 WHERE Student_ID = 104; 
+UPDATE S2 SET  Adress='kakinada' WHERE Student_ID = 103; 
+
+
+select Student_ID, Name, Age from S2;
